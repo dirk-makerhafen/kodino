@@ -1,6 +1,6 @@
 Kodino
 ======
-Kodino is a library to run Kodi/Xbmc addons without Kodi/Xbmc.
+Kodino is a python library to run Kodi/Xbmc addons without Kodi/Xbmc.
 It works for most content providing plugins. It does not work for plugins that draw their own view.
 
 It requires python2, because Kodi/Xbmc addons are python2 only. 
@@ -18,7 +18,7 @@ It requires python2, because Kodi/Xbmc addons are python2 only.
 
 To install Kodino, first clone this repository:
 ```Shell
-    git clone xx
+    git clone https://github.com/dirk-attraktor/kodino.git
 ```
 
 Then, update and upgrade the default repositorys
