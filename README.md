@@ -110,10 +110,10 @@ To manually install repositorys/addons, extract/copy them into the plugins folde
     'https://r3---sn-1gi7zn7e.googlevideo.com/videoplayback?lmt=1440151299790002&fvip=1&gir=yes&ei=Ui37WprwEMOugQeP26PYCA&requiressl=yes&ip=176.10.116.173&key=yt6&ms=au%2Conr&mv=m&mt=1526410494&id=a02c97b070be950e&mn=sn-1gi7zn7e%2Csn-hpa7znsz&mm=31%2C26&signature=D5789B43DABCD43D313407F8B8A31C9CCA008404.7F71C12E3C947D549CEC07A7DC81838649332A4D&ratebypass=yes&ipbits=0&clen=3363343&initcwndbps=593750&itag=18&pl=19&dur=52.337&source=youtube&expire=1526432178&c=WEB&mime=video%2Fmp4&sparams=clen%2Cdur%2Cei%2Cgir%2Cid%2Cinitcwndbps%2Cip%2Cipbits%2Citag%2Clmt%2Cmime%2Cmm%2Cmn%2Cms%2Cmv%2Cpl%2Cratebypass%2Crequiressl%2Csource%2Cexpire'
 ```
 
-* Receive playback duration, this calls ffprobe on the playback url to determine the action playback length.
+* Receive playback duration, this calls ffprobe on the playback url to determine the actual playback length.
 This may fail on some sources, in this case it returns 0. 
 ```Python
-    duration = subitems[23].getDuration()
+    duration = subitems[3].getDuration()
 ```
 ```Python
     52
