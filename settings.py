@@ -18,9 +18,9 @@ DEFAULT_HOME_FOLDER = "%s/home/default"  % ( SPECIAL_FOLDER )
 SINGLE_INSTANCE = False
 
 CACHE_DISABLED = False
-CACHETIME_ITEM        = 3600 * 6 
+CACHETIME_FOLDER      = 3600 * 6 
+CACHETIME_NOFOLDER    = 3600     # video items, their cachetime should be short because playback urls are often not valid for very long
 CACHETIME_DURATION    = 3600 * 6
-CACHETIME_PLAYBACKURL = 3600 
 CACHETIME_STATS       = 3600 * 24 * 14
 
 TIMEOUT_XBMCWRAPPER  = 15

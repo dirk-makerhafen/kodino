@@ -66,7 +66,7 @@ class KodinoItem():
         if keyboardInput != None:
             key = "%s:%s:keyboard" % (self.addon.id, self.handle)
             redis_connection.set(key, keyboardInput)
-            redis_connection.expire(key, settings.CACHETIME_ITEM + 5)
+            redis_connection.expire(key, settings.TIMEOUT_XBMCWRAPPER + 5)
             self.cache_key = "cache:%s:%s:keyboard:%s" % (self.addon.id, self.url, keyboardInput)
         else:
             self.cache_key = "cache:%s:%s" % (self.addon.id, self.url)
@@ -260,7 +260,10 @@ class KodinoItem():
         itemstrings = redis_connection.lrange( redis_key, 0, -1 )
         try:
             redis_connection.rename(redis_key, self.cache_key)
-            redis_connection.expire(self.cache_key, settings.CACHETIME_ITEM)
+            if self.isFolder == True:
+                redis_connection.expire(self.cache_key, settings.CACHETIME_FOLDER)
+            else:
+                redis_connection.expire(self.cache_key, settings.CACHETIME_NOFOLDER)
         except:
             None
         #print("wrapper exiting, return %s itemsstring" % len(itemstrings))
