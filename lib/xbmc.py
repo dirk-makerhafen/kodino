@@ -169,8 +169,8 @@ def executeJSONRPC(jsonrpccommand):
     if method == "Addons.GetAddonDetails":
         addonid = json_rpc["params"]["addonid"]
         if addonid.startswith("inputstream."):
-            return json.dumps({"error":"not implemented"})
-        
+            return json.dumps({ "result" : { "addon" : { "enabled" : False } } })
+        return json.dumps({"error":"not implemented"})
     return "{}"
 
 sleepUsageCount = 0        
@@ -548,16 +548,22 @@ def translatePath(path):
     else:
         # create temporary home folder, delete after run (BY CALLER of wrapper.py!)  to prevent for example search string caching by plugins. 
         if opath.startswith("special://home"):
-            opath_default = opath.replace("special://home"  , settings.DEFAULT_HOME_FOLDER) # Kodi's user specific (Web interface user) configuration directory. 
+            opath_default  = opath.replace("special://home" , settings.DEFAULT_HOME_FOLDER) # Kodi's user specific (Web interface user) configuration directory. 
             opath_instance = opath.replace("special://home" , xbmcWrapperCommon.HOME_FOLDER) # Kodi's user specific (Web interface user) configuration directory. 
+
             if not os.path.exists(opath_instance):
                 if os.path.exists(opath_default):
                     shutil.copytree(opath_default, opath_instance)            
                     print("copying default settings")
                 else:
-                    print("Creating home path %s" % opath_instance)
-                    os.makedirs(opath_instance)
-                    
+                    try:
+                        os.makedirs( settings.DEFAULT_HOME_FOLDER + "/" + "userdata/addon_data/" + xbmcWrapperCommon.CURRENT_PLUGIN  )
+                    except:
+                        pass
+                    try:
+                        os.makedirs( xbmcWrapperCommon.HOME_FOLDER + "/" + "userdata/addon_data/" + xbmcWrapperCommon.CURRENT_PLUGIN  )
+                    except:
+                        pass
             opath = opath_instance
             
     opath = opath.replace("special://kodi"          , "special://xbmc"                         ) # does not exist yet.

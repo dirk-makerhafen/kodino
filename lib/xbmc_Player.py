@@ -4,6 +4,8 @@ from xbmc_PlayList import PlayList
 import settings
 import xbmcWrapperCommon
 
+redis_connection = redis.StrictRedis(host=settings.REDIS_HOST, port= settings.REDIS_PORT,db= settings.REDIS_DB)
+
 class Player(object):
     """
     Kodi's player
