@@ -93,7 +93,7 @@ class KodinoItem():
                     thumbnailImage = thumbnailImage[1:]
                 subaddon = self.addon
                 if item["url"].startswith("plugin://"):
-                    subaddonid =  item["url"].split("plugin://")[1].split("/")[0]
+                    subaddonid =  item["url"].split("plugin://")[1].split("/")[0].split("?")[0]
                     if subaddonid !=  self.addon.id:
                         s = getKodinoPlugin().getInstalledById(subaddonid)   
                         if s != None:
@@ -105,7 +105,7 @@ class KodinoItem():
             if item["key"] == "xbmc_PlayList:add":
                 subaddon = self.addon
                 if item["url"].startswith("plugin://"):
-                    subaddonid =  item["url"].split("plugin://")[1].split("/")[0]
+                    subaddonid =  item["url"].split("plugin://")[1].split("/")[0].split("?")[0]
                     if subaddonid !=  self.addon.id:
                         s = getKodinoPlugin().getInstalledById(subaddonid)                
                         if s != None:
@@ -130,7 +130,7 @@ class KodinoItem():
                 if command == "Container.Update":
                     url = function.split("Container.Update(")[1].split(")")[0]
                     if url.startswith("plugin://"):
-                        subaddonid =  url.split("plugin://")[1].split("/")[0]
+                        subaddonid =  url.split("plugin://")[1].split("/")[0].split("?")[0]
                         subaddon = getKodinoPlugin().getInstalledById(subaddonid)      
                         subitem = KodinoItem(subaddon, url, "Dummy", True, "", False, self)
                         tmp_subitems = subitem.getSubItems()
@@ -163,7 +163,7 @@ class KodinoItem():
             if playbackUrl == None:
                 playbackUrl = ""      
             if playbackUrl.startswith("plugin://"):
-                addonid =  playbackUrl.split("plugin://")[1].split("/")[0]
+                addonid =  playbackUrl.split("plugin://")[1].split("/")[0].split("?")[0]
                 addon = getKodinoPlugin().getInstalledById(addonid)
                 subitem = KodinoItem(addon, playbackUrl, "playback dummy", "file", "", False, self)
                 playbackUrl = subitem.getPlaybackUrl()   
