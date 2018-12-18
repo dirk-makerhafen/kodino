@@ -1,4 +1,6 @@
 import sys
+import re
+import os
 import settings
 
 # kodi expects argv:
@@ -17,7 +19,15 @@ import settings
 CURRENT_PLUGIN = sys.argv[1]
 CURRENT_HANDLE = sys.argv[4]
 CURRENT_QUEUE = "%s:%s" % (CURRENT_PLUGIN, CURRENT_HANDLE)
-HOME_FOLDER = "%s/home/tmp_%s"  % ( settings.SPECIAL_FOLDER, CURRENT_HANDLE ) 
+try:
+    username = os.environ['SESSION_USERNAME']
+    username = re.sub(r'\W+', '', username)
+    if username == "":
+        username = "default"
+except:
+    username = "default"
+
+HOME_FOLDER = "%s/home/%s"  % ( settings.SPECIAL_FOLDER, username ) 
 
 EXECUTABLE = sys.argv[2]
 

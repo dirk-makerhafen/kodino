@@ -46,7 +46,8 @@ To manually install repositorys/addons, extract/copy them into the plugins folde
 
 ### Python usages:
 ```Python
-    import kodino
+    from kodino import Kodino
+    kodino = Kodino() # or Kodino("username") in a multiuser environment, each user gets its own home dir
     kodino.plugins.update()
     kodino.plugins.upgrade()
     kodino.plugins.install("plugin.video.youtube")

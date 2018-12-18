@@ -217,6 +217,12 @@ class KodinoItem():
             executable = self.addon.getExtentionsByPoint("xbmc.python.pluginsource")[0].library
             my_env = os.environ.copy()
             my_env["PYTHONIOENCODING"] = "UTF-8"
+
+            root = self
+            while root.parent != None:
+                root = root.parent
+            my_env["SESSION_USERNAME"] = root.username
+
             #0  wrapper.py
             #1  plugin id eg plugin.video.demo1
             #2  executable, for example default.py
@@ -234,21 +240,7 @@ class KodinoItem():
                 FNULL = open(os.devnull, 'w')
                 self.process = subprocess.Popen(["%s/xbmcWrapper.py" % settings.KODINO_FOLDER , self.addon.id, executable, baseurl, self.handle, params],env = my_env,  stdout=FNULL, stderr=subprocess.STDOUT)
             self.process.communicate()
-            tmphome = "%s/home/tmp_%s"  % (settings.SPECIAL_FOLDER , self.handle )
-            #defaulthome = "%s/home/default"  % (settings.SPECIAL_FOLDER ) # todo: automatically copy non critical files (for example NOT cache/search.sqlite) back to default user profile
-            # may be need to support for example kahn academy plugin, it downloads a 10 mb file on first start that we may want to cache automatically
-            #if os.path.exists(tmphome):
-            #    for path, subdirs, files in os.walk(tmphome):
-            #        for name in files:
-            #            fullpath = os.path.join(path, name)
-            #            subp = path.replace(tmphome,"")
-            #            dsubp = "%s/%s" % (defaulthome, subp)
-            #            print(fullpath, subp, dsubp)
-                        
-            try:
-                shutil.rmtree(tmphome)
-            except:
-                pass
+
         thread = threading.Thread(target=target)
         thread.start()            
         thread.join(settings.TIMEOUT_XBMCWRAPPER)
@@ -276,7 +268,7 @@ class KodinoItem():
         }
         def target(command):
             my_env = os.environ.copy()
-            my_env["PYTHONIOENCODING"] = "UTF-8"
+            my_env["PYTHONIOENCODING"] = "UTF8"
             FNULL = open(os.devnull, 'w')
             if settings.DEBUG_TO_CONSOLE == True:
                 data["process"] = subprocess.Popen(command, env = my_env , stdout=subprocess.PIPE)

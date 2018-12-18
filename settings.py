@@ -9,14 +9,6 @@ LIBRARY_FOLDER =  os.path.abspath(KODINO_FOLDER + "/lib" )
 SPECIAL_FOLDER =  os.path.abspath(KODINO_FOLDER + "/special" )
 DEFAULT_HOME_FOLDER = "%s/home/default"  % ( SPECIAL_FOLDER ) 
 
-# if multiple user use this, like in the TV app, disable single instance or caching,
-# addons may store for example last searches in HOME/addon_data/<addon_id>/..
-# if all users share the same cache, or the same home they may see each others seaches, which may not be desired. 
-# if you disable single instance, a new temporary home folder will be created from the default home folder on wrapper call and deleted afterwards. 
-# Hint: some plugins download something large on first start, like the KahnAcademy plugin, it downloads a 10 MB functions file. 
-# If you disable single instance you might want to put this file into the default home so it does not get downloaded on every addon call. 
-SINGLE_INSTANCE = False
-
 CACHE_DISABLED = False
 CACHETIME_FOLDER      = 3600 * 6 
 CACHETIME_NOFOLDER    = 3600     # video items, their cachetime should be short because playback urls are often not valid for very long

@@ -11,7 +11,8 @@ import settings
    
    
 class Kodino():
-    def __init__(self):
+    def __init__(self, username = "default"):
+        self.username = username
         self.title = ""
         self.hash = hashlib.sha256("KodinoRoot".encode("UTF-8")).hexdigest()[0:16]
         self.path = [ self.hash, self.title ]

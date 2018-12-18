@@ -543,28 +543,25 @@ def translatePath(path):
     opath = opath.replace("special://masterprofile" , "special://home/userdata"                ) # Kodi's main configuration directory. Normally located at special://home/userdata, this directory contains global settings and sources, as well as any Kodi profile directories. Normally special://home/userdata
     opath = opath.replace("special://temp"          , "special://home/temp"                    ) # Kodi's temporary directory. This path is used to cache various data during normal usage. Unless you need the log, nothing in this directory is detrimental to Kodi's operation. Normally special://home/temp
         
-    if settings.SINGLE_INSTANCE:
-        opath = opath.replace("special://home"          , settings.DEFAULT_HOME_FOLDER) # Kodi's user specific (Web interface user) configuration directory. 
-    else:
-        # create temporary home folder, delete after run (BY CALLER of wrapper.py!)  to prevent for example search string caching by plugins. 
-        if opath.startswith("special://home"):
-            opath_default  = opath.replace("special://home" , settings.DEFAULT_HOME_FOLDER) # Kodi's user specific (Web interface user) configuration directory. 
-            opath_instance = opath.replace("special://home" , xbmcWrapperCommon.HOME_FOLDER) # Kodi's user specific (Web interface user) configuration directory. 
 
-            if not os.path.exists(opath_instance):
-                if os.path.exists(opath_default):
-                    shutil.copytree(opath_default, opath_instance)            
-                    print("copying default settings")
-                else:
-                    try:
-                        os.makedirs( settings.DEFAULT_HOME_FOLDER + "/" + "userdata/addon_data/" + xbmcWrapperCommon.CURRENT_PLUGIN  )
-                    except:
-                        pass
-                    try:
-                        os.makedirs( xbmcWrapperCommon.HOME_FOLDER + "/" + "userdata/addon_data/" + xbmcWrapperCommon.CURRENT_PLUGIN  )
-                    except:
-                        pass
-            opath = opath_instance
+    if opath.startswith("special://home"):
+        opath_default  = opath.replace("special://home" , settings.DEFAULT_HOME_FOLDER) # Kodi's user specific (Web interface user) configuration directory. 
+        opath_instance = opath.replace("special://home" , xbmcWrapperCommon.HOME_FOLDER) # Kodi's user specific (Web interface user) configuration directory. 
+
+        if not os.path.exists(opath_instance):
+            if os.path.exists(opath_default):
+                shutil.copytree(opath_default, opath_instance)
+                print("copying default settings")
+            else:
+                try:
+                    os.makedirs( settings.DEFAULT_HOME_FOLDER + "/" + "userdata/addon_data/" + xbmcWrapperCommon.CURRENT_PLUGIN  )
+                except:
+                    pass
+                try:
+                    os.makedirs( xbmcWrapperCommon.HOME_FOLDER + "/" + "userdata/addon_data/" + xbmcWrapperCommon.CURRENT_PLUGIN  )
+                except:
+                    pass
+        opath = opath_instance
             
     opath = opath.replace("special://kodi"          , "special://xbmc"                         ) # does not exist yet.
     opath = opath.replace("special://xbmc"          , "%s/xbmc" % settings.SPECIAL_FOLDER  ) # Kodi's installation root directory. This path is read-only contains the Kodi binary, support libraries and default configuration files, skins, scripts and plugins. Users should not modify files or install addons in this directory.
