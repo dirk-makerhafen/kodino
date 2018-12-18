@@ -140,8 +140,10 @@ def executebuiltin(function, wait=False):
         ..
         xbmc.executebuiltin('RunXBE(c:\\avalaunch.xbe)')
         ..
-    """
-    redis_connection.rpush(xbmcWrapperCommon.CURRENT_QUEUE, json.dumps({"key": "xbmc:executebuiltin" , "function" : function}))    
+    """    
+    j= json.dumps({"key": "xbmc:executebuiltin" , "function" : function})
+    j = j.encode("UTF8")
+    redis_connection.rpush(xbmcWrapperCommon.CURRENT_QUEUE, j)    
   
 
 def executeJSONRPC(jsonrpccommand):

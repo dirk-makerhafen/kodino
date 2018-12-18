@@ -216,7 +216,7 @@ class KodinoItem():
         def target():
             executable = self.addon.getExtentionsByPoint("xbmc.python.pluginsource")[0].library
             my_env = os.environ.copy()
-            my_env["PYTHONIOENCODING"] = "UTF-8"
+            my_env["PYTHONIOENCODING"] = "UTF8"
 
             root = self
             while root.parent != None:
@@ -234,6 +234,8 @@ class KodinoItem():
                 params = "?%s" % self.url.split("?")[1]
             except:
                 params = ""
+            baseurl = baseurl.encode("UTF8")
+            params = params.encode("UTF8")
             if settings.DEBUG_TO_CONSOLE == True:
                 self.process = subprocess.Popen(["%s/xbmcWrapper.py" % settings.KODINO_FOLDER , self.addon.id, executable, baseurl, self.handle, params],env = my_env)
             else:
