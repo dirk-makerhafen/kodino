@@ -27,7 +27,7 @@ def addStat(key, path , value = 1):
     redis_connection.expire(rediskey, settings.CACHETIME_STATS)    
 
 class KodinoItem():
-    def __init__(self, addon, url, title, isFolder, thumbnailImage, requireKeyboard, parent ):
+    def __init__(self, addon, url, title, isFolder, thumbnailImage, requireKeyboard, parent, username = "default" ):
         self.parent = parent
         self.addon = addon 
         self.isAdult = self.addon.isAdult # this is not automagically here, to mark addons as adult, add them to settings.py! 
@@ -40,6 +40,8 @@ class KodinoItem():
         self.hash = hashlib.sha256(("%s\t%s" % (self.addon.id, self.url)).encode("UTF-8")).hexdigest()[0:16]
         self.cache_key = "cache:%s:%s" % (self.addon.id, self.url)
         
+        self.username = username
+
         self.handle = "%s" % random.randint(0,2000000000)
         self.keyboardInput = None
     
